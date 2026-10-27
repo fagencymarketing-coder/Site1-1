@@ -32,14 +32,14 @@ A = {  # короткий код -> (URL, анкор)
 }
 # откуда -> 4 ссылки (последние помечены как кросс-раздельные жирным в ТЗ)
 M = {
- 'abon':['vosst','decl','cons','upruchet'],
- 'vosst':['abon','cons','audit','otnalog'],
- 'decl':['abon','cons','ndfl3','optnalog'],
- 'cons':['abon','vosst','audit','yurcons'],
+ 'abon':['vosst','decl','cons','yurobsl'],
+ 'vosst':['abon','cons','decl','otnalog'],
+ 'decl':['abon','cons','ndfl3','vosst'],
+ 'cons':['abon','vosst','decl','yurcons'],
  'malyy':['abon','cons','reg','sred'],
- 'sred':['abon','glavbuh','upruchet','krup'],
- 'krup':['abon','glavbuh','upruchet','ved'],
- 'glavbuh':['abon','vosst','audit','upruchet'],
+ 'sred':['abon','glavbuh','krup','yurobsl'],
+ 'krup':['abon','glavbuh','ved','otnalog'],
+ 'glavbuh':['abon','vosst','cons','yurobsl'],
  'upruchet':['audit','optnalog','abon','glavbuh'],
  'audit':['upruchet','optnalog','vosst','pravaudit'],
  'optnalog':['audit','upruchet','otnalog','abon'],
