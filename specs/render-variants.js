@@ -39,7 +39,7 @@ const CSS = `
 const build = (variant) => `
 <section class="ms2 ms2--${variant}" id="__v">
   <div class="ms2__in">
-    <h2 class="ms2__t">С этим обычно заказывают</h2>
+    <h2 class="ms2__t">Другие услуги</h2>
     <ul class="ms2__list">
       ${CARDS.map(([n, r, h], i) => `
       <li><a class="ms2__card${variant === 'a' && i === 0 ? ' ms2__card--acc' : ''}" href="${h}">
