@@ -1,0 +1,329 @@
+<title>Усиление блока «Другие услуги»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Документ-разбор: проблема, пять приёмов с живыми превью в стилях сайта, итоговый вариант */
+:root{
+  --bg:#fcfcf9;--surface:#fff;--fg:#191a16;--muted:#6d6e62;--faint:#9a9b8e;--line:#e4e4d9;
+  --olive:#8e9142;--olive-bg:#eef0dd;--rose:#c32f55;--rose-bg:#fbe8ec;
+  --f:'Golos Text',ui-sans-serif,system-ui,'Segoe UI',Roboto,sans-serif;
+  --m:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --site:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141512;--surface:#1d1e1a;--fg:#eceade;--muted:#9d9e90;--faint:#7a7b6e;--line:#2f3029;
+  --olive:#b6ba6b;--olive-bg:#262819;--rose:#e8798f;--rose-bg:#2e1d22;color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#141512;--surface:#1d1e1a;--fg:#eceade;--muted:#9d9e90;--faint:#7a7b6e;--line:#2f3029;
+  --olive:#b6ba6b;--olive-bg:#262819;--rose:#e8798f;--rose-bg:#2e1d22;color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f);font-size:16.5px;line-height:1.6;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 80px}
+.wrap{max-width:1000px;margin-inline:auto}
+
+header.top{padding-block:56px 30px;border-bottom:2px solid var(--fg)}
+.kick{font-family:var(--m);font-size:11.5px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--rose);margin:0 0 14px}
+h1{font-size:clamp(30px,5.6vw,46px);line-height:1.05;font-weight:800;letter-spacing:-.03em;margin:0 0 16px;text-wrap:balance}
+.lede{font-size:clamp(16px,2.2vw,19px);line-height:1.5;color:var(--muted);max-width:58ch;margin:0}
+
+section{padding-block:44px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.num{font-family:var(--m);font-size:12px;font-weight:600;color:var(--olive);letter-spacing:.1em;text-transform:uppercase;margin:0 0 8px}
+h2{font-size:clamp(23px,3.6vw,31px);line-height:1.15;font-weight:700;letter-spacing:-.025em;margin:0 0 8px;text-wrap:balance}
+h3{font-size:clamp(17px,2.2vw,20px);font-weight:650;margin:32px 0 10px;letter-spacing:-.012em}
+.hint{color:var(--faint);font-size:14.5px;margin:0 0 22px;max-width:62ch}
+p{margin:0 0 14px;max-width:66ch}
+ul{margin:0 0 16px;padding-left:21px;max-width:66ch}
+li{margin-bottom:7px}
+code{font-family:var(--m);font-size:12.8px;background:var(--olive-bg);padding:2px 6px;border-radius:5px}
+
+.frame{margin:22px 0 8px;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.fbar{display:flex;align-items:center;gap:7px;padding:9px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
+.flbl{font-size:12px;color:var(--faint);margin-left:7px;font-weight:600}
+.cap{font-size:13px;color:var(--faint);margin:0 0 26px;max-width:66ch}
+
+/* ── превью в стилях сайта ── */
+.site{font-family:var(--site);color:#1b1b1b;padding:32px 22px 36px}
+.site--now{background:#f9f9f9}
+.site--new{background:#f2f3ed}
+.st{font-size:clamp(23px,3.1vw,36px);font-weight:600;line-height:1.1;letter-spacing:-.015em;margin:0 0 28px;color:#1b1b1b}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr));gap:18px;list-style:none;margin:0;padding:0}
+.card{background:#fff;border-radius:20px;padding:24px 20px;display:flex;flex-direction:column;
+  color:#1b1b1b;text-decoration:none;position:relative;min-width:0;transition:transform .2s}
+.card:hover{transform:translateY(-3px)}
+.card .ar{width:22px;height:22px;margin-left:auto;flex:none}
+.card .nm{font-size:17px;font-weight:600;line-height:1.3;margin-top:auto}
+.card .rs{font-size:14px;line-height:1.35;color:#6b6a5f;margin-top:7px}
+.card .pr{font-size:13px;font-weight:600;color:#8e9142;margin-top:12px}
+/* как сейчас */
+.site--now .card{min-height:230px;padding:22px 18px}
+.site--now .cards>li:nth-child(2n) .card{background:#e6e7cf}
+.site--now .card .nm{font-weight:500}
+/* вариант с чередованием */
+.alt .cards>li:nth-child(2n) .card{background:#e6e7cf}
+/* акцентная карточка */
+.card--acc{background:#d73a61;color:#fff}
+.card--acc .rs{color:rgba(255,255,255,.85)}
+.card--acc .pr{color:#fff}
+.badge{position:absolute;top:-9px;left:18px;background:#1b1b1b;color:#fff;font-size:11px;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+.empty{flex:1;min-height:110px;display:flex;align-items:center;justify-content:center;
+  color:#c9c9bd;font-size:12px;border:1px dashed #d9d9cc;border-radius:10px;margin:14px 0;text-align:center;padding:6px}
+
+.flag{border-radius:11px;padding:16px 19px;margin:20px 0;font-size:15.5px;background:var(--rose-bg);border-left:3px solid var(--rose)}
+.flag.calm{background:var(--olive-bg);border-left-color:var(--olive)}
+.flag p{margin:0 0 9px;max-width:none}.flag p:last-child{margin-bottom:0}
+.flag .t{font-weight:700;display:block;margin-bottom:5px}
+
+.tw{overflow-x:auto;margin:18px 0 22px;border:1px solid var(--line);border-radius:11px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:460px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);background:var(--bg);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+.rank{display:flex;flex-direction:column;gap:9px;margin:20px 0}
+.rk{display:grid;grid-template-columns:30px 1fr auto;gap:13px;align-items:center;padding:13px 16px;
+  background:var(--surface);border:1px solid var(--line);border-radius:10px;min-width:0}
+.rk .n{font-family:var(--m);font-size:15px;font-weight:600;color:var(--rose);text-align:center}
+.rk .tx{min-width:0}
+.rk .tx b{display:block;font-size:15.5px;margin-bottom:2px}
+.rk .tx span{font-size:13.5px;color:var(--muted)}
+.rk .ef{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;
+  border-radius:999px;white-space:nowrap;background:var(--olive-bg);color:var(--olive)}
+.rk .ef.mid{background:#fdf4e3;color:#b8860b}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="kick">1-plus-1.ru · дизайн</p>
+  <h1>Как усилить блок «Другие услуги»</h1>
+  <p class="lede">Пять приёмов, от бесплатных до требующих текстов. Все превью
+  свёрстаны в стилях действующего сайта — цвета, шрифт и скругления настоящие.</p>
+</header>
+
+<!-- 1 -->
+<section>
+  <p class="num">01 — Диагноз</p>
+  <h2>Почему блок сейчас не работает</h2>
+
+  <div class="frame">
+    <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="flbl">как выглядит сейчас</span></div>
+    <div class="site site--now">
+      <div class="st">Еще услуги</div>
+      <ul class="cards" id="now"></ul>
+    </div>
+  </div>
+  <p class="cap">Воспроизведено по действующей таблице стилей: высота карточки 300px, название прижато к низу.</p>
+
+  <p>Три проблемы, по убыванию важности:</p>
+  <ul>
+    <li><b>В карточке 300px высоты и 40px содержимого.</b> Две трети — пустота.
+    Глаз читает пустой прямоугольник как «тут ничего нет» и проскакивает дальше.</li>
+    <li><b>Нет причины кликнуть.</b> Только название услуги. Человек не понимает,
+    зачем ему туда — особенно если услугу он не искал.</li>
+    <li><b>Белые карточки на фоне <code>#f9f9f9</code> почти сливаются.</b>
+    Контраст 1,04:1 — на глаз это один цвет. Половина карточек визуально отсутствует.</li>
+  </ul>
+
+  <div class="flag">
+    <p class="t">Плюс одна вещь, которая съедает внимание</p>
+    <p>Блок стоит прямо перед формой заявки. Если он слабый, человек проскакивает
+    и его, и форму — внизу страницы у нас одна попытка, и сейчас она тратится впустую.</p>
+  </div>
+</section>
+
+<!-- 2 -->
+<section>
+  <p class="num">02 — Приёмы</p>
+  <h2>Что можно сделать</h2>
+  <p class="hint">По соотношению «эффект к трудозатратам».</p>
+
+  <div class="rank">
+    <div class="rk"><span class="n">1</span><span class="tx"><b>Высота карточки по содержимому</b>
+      <span>Убрать <code>min-height: 300px</code>. Блок становится плотным, перестаёт выглядеть сломанным</span></span>
+      <span class="ef">1 строка CSS</span></div>
+    <div class="rk"><span class="n">2</span><span class="tx"><b>Строка-причина под названием</b>
+      <span>Отвечает на «зачем мне туда». Тексты уже есть — это формулировки из воронки</span></span>
+      <span class="ef">29 коротких фраз</span></div>
+    <div class="rk"><span class="n">3</span><span class="tx"><b>Поднять контраст карточек</b>
+      <span>Фон секции <code>#f2f3ed</code> вместо <code>#f9f9f9</code> — белые карточки становятся видны</span></span>
+      <span class="ef">1 строка CSS</span></div>
+    <div class="rk"><span class="n">4</span><span class="tx"><b>Одна карточка акцентная</b>
+      <span>Главная допродажа розовым. Единственное цветное пятно ловит взгляд</span></span>
+      <span class="ef">флаг в админке</span></div>
+    <div class="rk"><span class="n">5</span><span class="tx"><b>Заголовок, который обещает</b>
+      <span>«С этим обычно заказывают» вместо «Другие услуги»</span></span>
+      <span class="ef">1 слово</span></div>
+    <div class="rk"><span class="n">6</span><span class="tx"><b>Цена «от»</b>
+      <span>Снимает главный барьер B2B-клиента. Но работает не для всех услуг — см. ниже</span></span>
+      <span class="ef mid">спорно</span></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section>
+  <p class="num">03 — Результат</p>
+  <h2>Как будет выглядеть</h2>
+  <p class="hint">Пример со страницы «Восстановление учёта». Приёмы 1–5 применены.</p>
+
+  <div class="frame">
+    <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <span class="flbl">предлагаемый вариант</span></div>
+    <div class="site site--new">
+      <div class="st">С этим обычно заказывают</div>
+      <ul class="cards" id="new"></ul>
+    </div>
+  </div>
+  <p class="cap">Высота карточки 190px вместо 300. Акцентная карточка — главная допродажа для этой страницы.</p>
+
+  <h3>Почему именно эти тексты</h3>
+  <p>Строка-причина не описывает услугу, а <b>продолжает мысль человека, который
+  сейчас на странице</b>. Он читал про восстановление учёта — значит, у него был
+  плохой бухгалтер. Карточка это и договаривает.</p>
+
+  <div class="tw"><table>
+    <tr><th>Карточка</th><th>Причина</th><th>Что она договаривает</th></tr>
+    <tr><td><b>Бухгалтерское сопровождение</b></td><td>Чтобы учёт больше не разваливался</td>
+        <td>Прежний бухгалтер не справился — вот замена</td></tr>
+    <tr><td><b>Инициативный аудит</b></td><td>Проверим, всё ли теперь в порядке</td>
+        <td>Восстановили — надо убедиться, что чисто</td></tr>
+    <tr><td><b>Оптимизация налогообложения</b></td><td>Законно снизим нагрузку</td>
+        <td>Раз уж наводим порядок — заодно и сэкономим</td></tr>
+    <tr><td><b>Защита от налоговой</b></td><td>Если проверка уже на пороге</td>
+        <td>Восстановление часто заказывают перед проверкой</td></tr>
+  </table></div>
+
+  <div class="flag calm">
+    <p class="t">Тексты уже написаны</p>
+    <p>На листе «Воронка» для каждой услуги есть формулировка, что ситуация клиента
+    говорит о его проблеме. Строка-причина — это та же мысль, сжатая до 4–6 слов.
+    Нужно 29 фраз, по одной на услугу.</p>
+  </div>
+</section>
+
+<!-- 4 -->
+<section>
+  <p class="num">04 — Варианты</p>
+  <h2>Сравнение по контрасту</h2>
+  <p class="hint">Три способа развести карточки между собой. Выбирать вам.</p>
+
+  <h3>А. Все карточки белые, одна акцентная</h3>
+  <div class="frame">
+    <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="flbl">вариант А</span></div>
+    <div class="site site--new"><ul class="cards" id="vA"></ul></div>
+  </div>
+  <p class="cap">Максимальный контраст на акцентной карточке — она единственное цветное пятно.
+  Рекомендую: глаз цепляется ровно за то, что мы продаём.</p>
+
+  <h3>Б. Чередование как сейчас, без акцента</h3>
+  <div class="frame">
+    <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="flbl">вариант Б</span></div>
+    <div class="site site--new alt"><ul class="cards" id="vB"></ul></div>
+  </div>
+  <p class="cap">Ближе всего к текущему виду сайта. Все карточки равны, ничего не выделено —
+  приёмы 1–3 работают, приём 4 нет.</p>
+
+  <h3>В. Чередование плюс акцент</h3>
+  <div class="frame">
+    <div class="fbar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="flbl">вариант В</span></div>
+    <div class="site site--new alt"><ul class="cards" id="vC"></ul></div>
+  </div>
+  <p class="cap">Три цвета в одном ряду — пестро. Акцент теряется среди оливковых карточек.
+  Не советую.</p>
+</section>
+
+<!-- 5 -->
+<section>
+  <p class="num">05 — Цена</p>
+  <h2>Показывать ли стоимость</h2>
+
+  <p>Цена в карточке снимает главный вопрос B2B-клиента и отсекает нецелевых.
+  На сайте цены открытые, их можно брать со страницы <code>/prices/</code>.
+  Но работает это не везде:</p>
+
+  <div class="tw"><table>
+    <tr><th>Услуга</th><th>Цена</th><th>Показывать?</th></tr>
+    <tr><td>Консультация бухгалтера</td><td>от 3 000 ₽</td><td><b style="color:var(--olive)">да</b> — низкий барьер, лёгкий вход</td></tr>
+    <tr><td>Бухгалтерское сопровождение</td><td>от 10 500 ₽/мес</td><td><b style="color:var(--olive)">да</b> — это ваше УТП против найма главбуха</td></tr>
+    <tr><td>Управленческий финансовый учёт</td><td>от 1 500 ₽</td><td><b style="color:var(--olive)">да</b></td></tr>
+    <tr><td>Воинский учёт</td><td>от 3 000 ₽</td><td><b style="color:var(--olive)">да</b></td></tr>
+    <tr><td>Инициативный аудит</td><td>от 25 000 ₽</td><td><b style="color:var(--rose)">нет</b> — отпугнёт до разговора о пользе</td></tr>
+    <tr><td>Оптимизация налогообложения</td><td>от 50 000 ₽</td><td><b style="color:var(--rose)">нет</b> — ценность не видна без контекста</td></tr>
+    <tr><td>Судебная экспертиза</td><td>от 40 000 ₽</td><td><b style="color:var(--rose)">нет</b></td></tr>
+    <tr><td>Восстановление учёта</td><td>нет в прайсе</td><td>—</td></tr>
+  </table></div>
+
+  <div class="flag">
+    <p class="t">Поэтому цену лучше не ставить</p>
+    <p>Показывать её у одних карточек и не показывать у других — выглядит так, будто
+    дорогое прячут. А ставить везде нельзя: «от 50 000 ₽» в блоке допродажи убивает клик.</p>
+    <p>Цене место на странице услуги, где есть контекст и объяснение. В карточке
+    сильнее работает причина.</p>
+  </div>
+</section>
+
+<!-- 6 -->
+<section>
+  <p class="num">06 — Что ещё</p>
+  <h2>Приёмы, которые я не советую</h2>
+
+  <div class="tw"><table>
+    <tr><th>Приём</th><th>Почему нет</th></tr>
+    <tr><td><b>Иконки на карточках</b></td><td>Нужно нарисовать 29 штук в едином стиле, а эффект сомнительный:
+      иконка услуги редко несёт смысл. Деньги лучше вложить в тексты причин</td></tr>
+    <tr><td><b>Картинки на карточках</b></td><td>Главная проблема сайта — скорость, на мобильных 29–51 из 100.
+      Четыре картинки на каждой странице услуги её усугубят</td></tr>
+    <tr><td><b>Карусель вместо сетки</b></td><td>Скрывает часть ссылок от поисковика и от человека.
+      Вся задача блока — чтобы ссылки видели</td></tr>
+    <tr><td><b>Анимация появления при прокрутке</b></td><td>Блок стоит внизу страницы.
+      Если он появляется по скроллу, часть людей его просто не дождётся</td></tr>
+    <tr><td><b>Кнопка «Смотреть все услуги»</b></td><td>Уводит в листинг вместо конкретной услуги.
+      Нам нужен переход на страницу, а не ещё один выбор</td></tr>
+  </table></div>
+</section>
+
+<!-- 7 -->
+<section>
+  <p class="num">07 — Итого</p>
+  <h2>Что передавать в работу</h2>
+  <ul>
+    <li><b>Подрядчику:</b> убрать <code>min-height: 300px</code>, фон секции
+    <code>#f2f3ed</code>, поддержать флаг «акцентная карточка» в свойствах инфоблока,
+    вывести строку-причину под названием.</li>
+    <li><b>В контентный чат:</b> 29 фраз-причин по 4–6 слов, по одной на услугу.
+    Основа — формулировки с листа «Воронка».</li>
+    <li><b>Решить вам:</b> вариант А или Б, и оставляем ли заголовок «Другие услуги»
+    или меняем на «С этим обычно заказывают».</li>
+  </ul>
+</section>
+
+</div>
+
+<script>
+const AR = '<svg class="ar" viewBox="0 0 25 24" fill="none" aria-hidden="true"><path d="M5.63 17.29a1 1 0 1 0 1.41 1.42l-1.41-1.42ZM18.33 6h1a1 1 0 0 0-1-1v1Zm-9-1a1 1 0 0 0 0 2V5Zm8 10a1 1 0 1 0 2 0h-2Zm1-9h-9v2h9V5Zm-1 1v9h2V6h-2Zm-5.79 7.21 6.5-6.5-1.41-1.42-6.5 6.5 1.41 1.42Zm-5.5 5.5 5.5-5.5-1.41-1.42-5.5 5.5 1.41 1.42Z" fill="currentColor"/></svg>';
+
+const NOW = ['Финансовый и налоговый консалтинг','Юридическое сопровождение','Регистрация бизнеса','Учет зарплаты и кадров'];
+document.getElementById('now').innerHTML = NOW.map(n =>
+  `<li><a class="card" href="#diagnoz">${AR}<div class="empty">пустота<br>≈ 200px</div><span class="nm">${n}</span></a></li>`).join('');
+
+const NEW = [
+  ['Бухгалтерское сопровождение','Чтобы учёт больше не разваливался', true],
+  ['Инициативный аудит','Проверим, всё ли теперь в порядке', false],
+  ['Оптимизация налогообложения','Законно снизим нагрузку', false],
+  ['Защита от налоговой','Если проверка уже на пороге', false],
+];
+const card = (n, r, acc, badge) =>
+  `<li><a class="card${acc?' card--acc':''}" href="#rezultat">${badge&&acc?'<span class="badge">главное</span>':''}${AR}<span class="nm">${n}</span><span class="rs">${r}</span></a></li>`;
+
+document.getElementById('new').innerHTML = NEW.map(([n,r,a]) => card(n,r,a,true)).join('');
+document.getElementById('vA').innerHTML  = NEW.map(([n,r,a]) => card(n,r,a,false)).join('');
+document.getElementById('vB').innerHTML  = NEW.map(([n,r])  => card(n,r,false,false)).join('');
+document.getElementById('vC').innerHTML  = NEW.map(([n,r,a]) => card(n,r,a,false)).join('');
+</script>
