@@ -15,6 +15,7 @@ A, OLD = load('map.py'); _, NEW = load('map_v2.py')
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 _o=sys.stdout; sys.stdout=open(os.devnull,'w')
 import review as RV
+import funnel_model as FM
 sys.stdout=_o
 
 SITE='https://1-plus-1.ru'
@@ -128,6 +129,38 @@ n.freeze_panes=f'A{HR2+1}'; n.auto_filter.ref=f'A{HR2}:K{LAST}'
 dv=DataValidation(type='list',formula1='"не начато,в работе,готово,вопрос"',allow_blank=True)
 n.add_data_validation(dv); dv.add(f'J{HR2+1}:J{LAST}')
 
+# ══ 4. Воронка ══
+f=wb.create_sheet('Воронка'); f.sheet_view.showGridLines=False
+cap(f,1,'Что приводит клиента в главные услуги',16,True,DARK,24)
+cap(f,2,'Логика блока «Другие услуги»: человек пришёл на страницу не просто так. Его ситуация говорит о проблеме,')
+cap(f,3,'а следующая услуга эту проблему закрывает. Пример: восстановление учёта — это улика, что прежний бухгалтер')
+cap(f,4,'не справился, значит клиенту нужен не только ремонт прошлого, но и новый бухгалтер на будущее.')
+cap(f,5,'Чем сильнее вход, тем выше ссылка стоит в блоке. У всех сильных входов она первой карточкой.',10,False,OLIVE)
+FORCE={'сильный':0,'средний':1,'слабый':2,'нет':3,'—':4}
+FCOL={'сильный':(OLIVE,OLIVEBG),'средний':(AMBER,AMBERBG),'слабый':(GREY,'FFFFFF'),
+      'нет':(GREY,'FFFFFF'),'—':(GREY,'FFFFFF')}
+fr=7
+for title, model, targets in [
+    ('Входы в абонентское бухгалтерское обслуживание — приоритет 1', FM.TO_ABON, {'abon'}),
+    ('Входы в финансовый и налоговый консалтинг — приоритет 2', FM.TO_FINK, {'upruchet','audit','optnalog','sudexp'}),
+    ('Входы в юридическое обслуживание бизнеса — приоритет 3', FM.TO_YUR, {'yurobsl'})]:
+    c=f.cell(row=fr,column=1,value=title); c.font=Font(size=12,bold=True,color=DARK)
+    f.row_dimensions[fr].height=22; fr+=1
+    hdr(f,fr,['Страница клиента','Сила входа','Что говорит ситуация клиента','Ссылка в блоке'],[34,13,86,22]); fr+=1
+    for code,(force,why) in sorted(model.items(), key=lambda x:(FORCE[x[1][0]], A[x[0]][1])):
+        tgts=[t for t in NEW.get(code,[]) if t in targets]
+        link=', '.join(A[t][1] for t in tgts) if tgts else '—'
+        pos=f'  (поз. {NEW[code].index(tgts[0])+1})' if tgts else ''
+        fg,bg=FCOL[force]
+        for j,v in enumerate([A[code][1],force,why,link+pos],1):
+            c=f.cell(row=fr,column=j,value=v); c.border=BOX; c.font=Font(size=10)
+            c.alignment=Alignment(vertical='center',wrap_text=(j in (1,3,4)))
+            if j==2:
+                c.font=Font(size=10,bold=True,color=fg); c.fill=PatternFill('solid',fgColor=bg)
+                c.alignment=Alignment(horizontal='center',vertical='center')
+        f.row_dimensions[fr].height=30; fr+=1
+    fr+=2
+
 # ══ 4. Сводка ══
 s=wb.create_sheet('Сводка'); s.sheet_view.showGridLines=False
 for col,w in zip('ABCDE',(44,18,18,14,52)): s.column_dimensions[col].width=w
@@ -136,7 +169,7 @@ hdr(s,3,['Куда ведут ссылки','Было','Стало','Изм.','�
 from collections import Counter
 co=Counter(RV.prio(x) for v in OLD.values() for x in v); cn=Counter(RV.prio(x) for v in NEW.values() for x in v)
 rows=[(PTAG[1],co[1],cn[1],'главная коммерческая страница сайта'),
-      (PTAG[2],co[2],cn[2],'вернули ссылки с бухгалтерских страниц — см. вопрос ниже'),
+      (PTAG[2],co[2],cn[2],'вернули ссылки с бухгалтерских страниц — решение ниже'),
       (PTAG[3],co[3],cn[3],'растёт за счёт юридического раздела, он самый большой по числу страниц'),
       ('— вне приоритетов',co[0],cn[0],'было 64% всех ссылок, стало 45%')]
 r=4
@@ -158,12 +191,16 @@ for code in ['abon','optnalog','audit','upruchet','sudexp','yurobsl']:
         if j==4: c.font=Font(size=10,bold=True,color=OLIVE if inbn[code]>=inbo[code] else ROSE)
     s.row_dimensions[r].height=22; r+=1
 r+=1
-c=s.cell(row=r,column=1,value='ВОПРОС, КОТОРЫЙ НУЖНО РЕШИТЬ'); c.font=Font(size=12,bold=True,color=ROSE); r+=1
-for line in ['В прошлой версии мы убрали финансовый консалтинг со страниц бухгалтерских услуг — по вашей правке.',
-             'Но консалтинг стоит вторым в приоритете продаж, а бухгалтерский раздел — самый посещаемый.',
-             'Чтобы приоритет работал, в новой карте эти 11 ссылок вернулись.',
-             'Если решение убрать консалтинг из бухгалтерии было принципиальным — скажите, откачу.',
-             'Тогда приоритет 2 останется с 15 ссылками вместо 26, и почти все — изнутри самого раздела консалтинга.']:
+c=s.cell(row=r,column=1,value='ФИНАНСОВЫЙ КОНСАЛТИНГ И БУХГАЛТЕРСКИЕ УСЛУГИ'); c.font=Font(size=12,bold=True,color=OLIVE); r+=1
+for line in ['Решение принято: блок «Другие услуги» — это допродажа, а не пункт меню, поэтому ссылки',
+             'с бухгалтерских страниц на финансовый консалтинг в нём остаются. Их 11.',
+             '',
+             'Отдельно и не отменяется: из мега-меню в ветке «Бухгалтерские услуги» пункты',
+             '«Инициативный аудит» и «Финансовый / Налоговый консалтинг» убираются — это задача 4.',
+             'Там они создают ложную иерархию и дублируют анкоры на один и тот же адрес.',
+             '',
+             'Раздел «Декларации 3-НДФЛ» намеренно оставлен без приоритетных ссылок: это B2C-воронка,',
+             'физлицо с вычетом не клиент бухобслуживания компаний.']:
     c=s.cell(row=r,column=1,value=line); c.font=Font(size=10); c.alignment=Alignment(wrap_text=True)
     s.merge_cells(start_row=r,start_column=1,end_row=r,end_column=5); s.row_dimensions[r].height=16; r+=1
 
