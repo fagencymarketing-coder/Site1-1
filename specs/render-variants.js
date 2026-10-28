@@ -14,10 +14,12 @@ const CSS = `
 .ms2 .ms2__in{width:min(1360px,100% - 40px);margin-inline:auto}
 .ms2__t{font-family:Inter,sans-serif;font-size:40px;font-weight:600;line-height:1.1;letter-spacing:-.015em;
   color:#1b1b1b;margin:0 0 40px}
-.ms2__list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));gap:20px;
-  list-style:none;margin:0;padding:0}
+.ms2__list{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;list-style:none;margin:0;padding:0}
+@media (max-width:1199px){.ms2__list{grid-template-columns:repeat(2,1fr)}}
+.ms2__list>li{display:flex;min-width:0}
 .ms2__card{background:#fff;border-radius:20px;padding:28px 26px;display:flex;flex-direction:column;
-  color:#1b1b1b;text-decoration:none;position:relative;min-width:0;transition:transform .25s,box-shadow .25s}
+  color:#1b1b1b;text-decoration:none;position:relative;min-width:0;width:100%;height:100%;
+  transition:transform .25s,box-shadow .25s}
 .ms2__card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(27,27,27,.09)}
 .ms2__ar{margin-left:auto;margin-bottom:38px;color:inherit;flex:none;line-height:0}
 .ms2__nm{font-family:Inter,sans-serif;font-size:20px;font-weight:600;line-height:1.28;margin:auto 0 0}
@@ -96,6 +98,7 @@ async function shoot(browser, variant, width, dsf, out) {
   const b = await chromium.launch();
   await shoot(b, 'a', 1440, 2, 'shots/var-A-desktop.png');
   await shoot(b, 'b', 1440, 2, 'shots/var-B-desktop.png');
+  await shoot(b, 'a', 1024, 2, 'shots/var-A-tablet.png');
   await shoot(b, 'a', 390, 2, 'shots/var-A-mobile.png');
   await shoot(b, 'b', 390, 2, 'shots/var-B-mobile.png');
   await b.close();
