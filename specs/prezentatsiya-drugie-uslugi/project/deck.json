@@ -1,0 +1,42 @@
+{
+ "v": 4,
+ "createdOnFiles": { "v": 1, "at": "2026-10-29T06:30:00Z" },
+ "lists": "css",
+ "title": "Блок «Другие услуги» по страницам",
+ "order": [
+  "abon", "vosst", "decl", "cons", "malyy", "sred", "krup", "glavbuh",
+  "upruchet", "audit", "optnalog", "sudexp",
+  "yurobsl", "dolgi", "pravaudit", "egrul", "reg", "dogovory", "ved", "trud", "sudy", "intell", "otnalog", "yurcons",
+  "onlayn", "ofis", "ndfl3",
+  "tz", "voin"
+ ],
+ "sections": {
+  "buh": {
+   "description": "Восемь страниц раздела «Бухгалтерские услуги»: как на каждой выглядит блок «Другие услуги».",
+   "start": "abon"
+  },
+  "fin": {
+   "description": "Четыре страницы финансового и налогового консалтинга.",
+   "start": "upruchet"
+  },
+  "yur": {
+   "description": "Двенадцать страниц юридического направления.",
+   "start": "yurobsl"
+  },
+  "ndfl": {
+   "description": "Три страницы раздела «Декларации 3-НДФЛ» — это B2C-воронка, приоритетных ссылок там нет намеренно.",
+   "start": "onlayn"
+  },
+  "other": {
+   "description": "Две отдельные услуги: регистрация товарного знака и воинский учёт.",
+   "start": "tz"
+  }
+ },
+ "faces": {
+  "golos-text": {
+   "family": "Golos Text",
+   "href": "https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&display=swap"
+  }
+ },
+ "designSystems": []
+}
