@@ -102,7 +102,7 @@ manager-callback
 | Фон карточки | `#ffffff` |
 | Скругление | 20px |
 | Внутренний отступ | 28px сверху/снизу, 26px по бокам |
-| Высота карточки | По содержимому, одинаковая внутри ряда |
+| Высота карточки | `min-height: 220px`, одинаковая на всех страницах |
 | Стрелка | 22×22, справа сверху |
 | Название услуги | 20px / 600 / 1.28, прижато к низу карточки |
 | Подпись под названием | 15px / 400 / 1.4, цвет `#6b6a5f` |
@@ -112,6 +112,10 @@ manager-callback
 
 **Сетка задаётся явными брейкпоинтами, не `auto-fit`.** С `auto-fit` на 1024px
 ряд ломается на три колонки, и четвёртая карточка остаётся одна во втором ряду.
+
+**У карточки есть `min-height: 220px`.** Без него высота блока гуляет от страницы
+к странице: там, где название услуги влезает в одну строку, блок на 50px ниже.
+220px — это высота самого «высокого» случая: двухстрочное название плюс подпись.
 
 **Высота карточек внутри ряда должна совпадать.** `<li>` в гриде растягивается
 сам, а карточка внутри — нет, поэтому у `<li>` нужен `display:flex`, а у карточки
@@ -197,7 +201,7 @@ manager-callback
 .related-services__list > li{display:flex;min-width:0}
 
 .rs-card{background:#fff;border-radius:20px;padding:28px 26px;
-  display:flex;flex-direction:column;width:100%;height:100%;
+  display:flex;flex-direction:column;width:100%;height:100%;min-height:220px;
   color:#1b1b1b;text-decoration:none;transition:color .3s}
 .rs-card__arrow{margin-left:auto;margin-bottom:38px;color:inherit;flex:none;line-height:0}
 .rs-card__name{font-size:20px;font-weight:600;line-height:1.28;margin:auto 0 0}
