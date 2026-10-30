@@ -35,7 +35,7 @@ M = {
  'abon':['upruchet', 'optnalog', 'yurobsl', 'vosst'],
  'vosst':['abon', 'audit', 'optnalog', 'otnalog'],
  'decl':['abon', 'optnalog', 'audit', 'cons'],
- 'cons':['abon', 'audit', 'yurobsl', 'yurcons'],
+ 'cons':['abon', 'audit', 'yurobsl', 'malyy'],
  'malyy':['abon', 'optnalog', 'yurobsl', 'reg'],
  'sred':['abon', 'upruchet', 'yurobsl', 'glavbuh'],
  'krup':['abon', 'upruchet', 'yurobsl', 'ved'],
